@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ArmaHub · Marketplace italiano di armi, ottica e ricarica</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--tx:#14181f;--mut:#5d6675;--bd:#e2e5ea;--ac:#c2410c;--ac2:#9a3412;--ok:#15803d;--sh:0 1px 3px rgba(0,0,0,.08);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1116;--card:#171b22;--tx:#eef0f4;--mut:#9aa3b2;--bd:#262c36;--ac:#fb923c;--ac2:#fdba74;--ok:#4ade80;--sh:none}}
+:root[data-theme="dark"]{--bg:#0e1116;--card:#171b22;--tx:#eef0f4;--mut:#9aa3b2;--bd:#262c36;--ac:#fb923c;--ac2:#fdba74;--ok:#4ade80;--sh:none}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button,input,select{font:inherit;color:inherit}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--card);border-bottom:1px solid var(--bd)}
+.wrap{max-width:1280px;margin:0 auto;padding:0 16px}
+.bar{display:flex;align-items:center;gap:12px;padding:10px 0;flex-wrap:wrap}
+.logo{font-weight:800;font-size:20px;letter-spacing:-.5px}.logo b{color:var(--ac)}
+.search{flex:1;min-width:200px;display:flex;gap:8px}
+.search input{flex:1;padding:10px 14px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);min-width:0}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:10px 16px;font-weight:600;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--tx);border:1px solid var(--bd)}
+.hero{padding:28px 0 8px}.hero h1{margin:0 0 6px;font-size:clamp(24px,4vw,38px);letter-spacing:-1px;line-height:1.1}
+.hero p{margin:0;color:var(--mut);max-width:640px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:18px 0}
+.stat{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px 14px}.stat b{display:block;font-size:22px}.stat span{color:var(--mut);font-size:13px}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:4px 0 12px;scrollbar-width:thin}
+.chip{flex:none;border:1px solid var(--bd);background:var(--card);border-radius:999px;padding:7px 14px;cursor:pointer;font-size:14px;white-space:nowrap}
+.chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.layout{display:grid;grid-template-columns:270px 1fr;gap:20px;padding-bottom:40px}
+aside{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;align-self:start;position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px)}
+aside h3{margin:0 0 12px;font-size:15px}
+.f{margin-bottom:14px}.f label{display:block;font-size:12px;font-weight:600;color:var(--mut);margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px}
+.f select,.f input[type=number]{width:100%;padding:9px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;margin:4px 0}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.top select{padding:8px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--card)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;overflow:hidden;box-shadow:var(--sh);cursor:pointer;display:flex;flex-direction:column;transition:transform .15s,border-color .15s}
+.card:hover{transform:translateY(-3px);border-color:var(--ac)}
+.ph{aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;position:relative;color:#fff;font-weight:700;font-size:15px;letter-spacing:.5px;text-align:center;padding:10px}
+.tag{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.6);border-radius:6px;font-size:11px;padding:2px 8px}
+.heart{position:absolute;top:6px;right:6px;background:rgba(255,255,255,.9);border:0;border-radius:50%;width:32px;height:32px;cursor:pointer;color:#444;font-size:16px}
+.heart.on{color:#dc2626}
+.cb{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.cb h4{margin:0;font-size:15px;line-height:1.3}.price{font-size:20px;font-weight:800;color:var(--ac)}
+.meta{display:flex;flex-wrap:wrap;gap:6px}.meta span{background:var(--bg);border-radius:6px;padding:2px 8px;font-size:12px;color:var(--mut)}
+.loc{font-size:13px;color:var(--mut);margin-top:auto;display:flex;justify-content:space-between}
+.ver{color:var(--ok);font-weight:600}
+.empty{text-align:center;padding:60px 10px;color:var(--mut)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:50;padding:12px}
+.modal.on{display:flex}
+.box{background:var(--card);border-radius:16px;max-width:760px;width:100%;max-height:92%;overflow:auto;display:grid;grid-template-columns:1fr 1fr}
+.box .ph{aspect-ratio:auto;min-height:240px;border-radius:16px 0 0 16px}
+.det{padding:20px}.det h2{margin:0 0 4px;font-size:22px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}td{padding:6px 0;border-bottom:1px solid var(--bd)}td:first-child{color:var(--mut);width:42%}
+.note{background:var(--bg);border-left:3px solid var(--ac);padding:10px 12px;border-radius:6px;font-size:13px;color:var(--mut);margin:12px 0}
+.x{position:absolute;right:20px;top:16px;background:var(--card);border:1px solid var(--bd);border-radius:50%;width:34px;height:34px;cursor:pointer}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:10px 0 30px}
+.how div{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px}.how b{color:var(--ac)}
+footer{border-top:1px solid var(--bd);background:var(--card);padding:24px 0;color:var(--mut);font-size:13px}
+.fbtn{display:none}
+@media(max-width:860px){
+.layout{grid-template-columns:1fr}
+aside{display:none;position:fixed;inset:0;z-index:40;border-radius:0;overflow:auto;top:0;padding-top:calc(env(safe-area-inset-top,0px) + 16px)}
+aside.on{display:block}
+.fbtn{display:inline-block}
+.box{grid-template-columns:1fr}.box .ph{border-radius:16px 16px 0 0;min-height:160px}
+.x{position:fixed}
+}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.wrap{padding:0 12px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="bar">
+<div class="logo">Arma<b>Hub</b></div>
+<div class="search"><input id="q" type="search" placeholder="Cerca marca, modello, calibro…" aria-label="Cerca"><button class="btn fbtn" onclick="toggleF()">Filtri</button></div>
+<button class="btn ghost" id="favBtn" onclick="toggleFav()">♥ Preferiti <span id="fc">0</span></button>
+<button class="btn ghost" onclick="toggleTheme()" aria-label="Tema">◐</button>
+<button class="btn" onclick="alert('Demo: qui si aprirebbe il form di pubblicazione annuncio.')">+ Pubblica</button>
+</div></div></header>
+
+<main class="wrap">
+<section class="hero"><h1>Compra e vendi in modo semplice, trasparente e in regola.</h1>
+<p>Annunci di privati e armerie: armi lunghe e corte, ottica, ricarica, accessori. Ogni scheda riporta tutti i dati tecnici e le indicazioni legali necessarie.</p></section>
+<div class="stats">
+<div class="stat"><b id="sN">0</b><span>annunci attivi</span></div>
+<div class="stat"><b id="sV">0</b><span>annunci verificati</span></div>
+<div class="stat"><b>107</b><span>province coperte</span></div>
+<div class="stat"><b>Gratis</b><span>per i privati</span></div></div>
+<div class="cats" id="cats"></div>
+
+<div class="layout">
+<aside id="aside">
+<h3>Filtri <button class="btn ghost" style="float:right;padding:4px 10px" onclick="toggleF()">Chiudi</button></h3>
+<div class="f"><label>Provincia</label><select id="prov"><option value="">Tutta Italia</option></select></div>
+<div class="f"><label>Prezzo (€)</label><div class="row2"><input type="number" id="pmin" placeholder="Min" min="0"><input type="number" id="pmax" placeholder="Max" min="0"></div></div>
+<div class="f"><label>Calibro</label><select id="cal"><option value="">Tutti</option></select></div>
+<div class="f"><label>Marca</label><select id="brand"><option value="">Tutte</option></select></div>
+<div class="f"><label>Condizione</label><select id="cond"><option value="">Qualsiasi</option><option>Nuovo</option><option>Come nuovo</option><option>Ottimo</option><option>Buono</option><option>Usurato</option></select></div>
+<div class="f"><label>Venditore</label><select id="sel"><option value="">Tutti</option><option>Privato</option><option>Armeria</option></select></div>
+<div class="f"><label class="chk"><input type="checkbox" id="onlyV"> Solo verificati</label><label class="chk"><input type="checkbox" id="onlyP"> Con prezzo indicato</label></div>
+<button class="btn" style="width:100%" onclick="toggleF()">Mostra risultati</button>
+<button class="btn ghost" style="width:100%;margin-top:8px" onclick="resetF()">Azzera filtri</button>
+</aside>
+<section>
+<div class="top"><div id="count" style="color:var(--mut)"></div>
+<select id="sort"><option value="new">Più recenti</option><option value="pa">Prezzo crescente</option><option value="pd">Prezzo decrescente</option><option value="az">Nome A–Z</option></select></div>
+<div class="grid" id="grid"></div>
+</section></div>
+
+<h2 style="margin-top:0">Come funziona</h2>
+<div class="how">
+<div><b>1 · Cerca</b><br>Filtra per categoria, calibro, marca, provincia e prezzo.</div>
+<div><b>2 · Contatta</b><br>Scrivi al venditore dalla scheda: dati completi e chiari.</div>
+<div><b>3 · Procedi in regola</b><br>Cessione tra soggetti abilitati, con le comunicazioni previste dalla legge.</div></div>
+</main>
+
+<footer><div class="wrap">ArmaHub · Progetto dimostrativo. Gli annunci mostrati sono esempi fittizi a scopo di design. Le armi possono essere cedute solo a soggetti in possesso dei titoli di legge (porto d'armi, nulla osta, ecc.) e la cessione va denunciata all'autorità competente nei termini previsti. Verifica sempre la normativa vigente.</div></footer>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeM()"><div class="box" id="box"></div></div>
+
+<script>
+const CATS=["Tutte","Armi lunghe","Armi corte","Ricarica","Ottica","Aria compressa / Softair","Armi bianche","Arcieria","Accessori","Caccia"];
+const COL={"Armi lunghe":"#7c2d12","Armi corte":"#1e3a5f","Ricarica":"#3f4f2a","Ottica":"#4c1d95","Aria compressa / Softair":"#0f766e","Armi bianche":"#475569","Arcieria":"#92400e","Accessori":"#374151","Caccia":"#166534"};
+const D=[
+["Beretta 92X Performance","Armi corte","Beretta","9x21 IMI",1000,"Come nuovo",2022,"Roma","Privato",1,"Dotazione originale completa, guancette aggiuntive in G10.",14],
+["Ruger SR22","Armi corte","Ruger",".22 LR",400,"Ottimo",2019,"Alessandria","Privato",0,"Completa di valigetta e due caricatori.",14],
+["Glock 44","Armi corte","Glock",".22 LR",350,"Come nuovo",2021,"Roma","Privato",1,"Edizione silver, dotazione originale.",14],
+["Smith & Wesson 17-4","Armi corte","Smith & Wesson",".22 LR",700,"Ottimo",2005,"Roma","Armeria",1,"Revolver da tiro sportivo, perfetto.",13],
+["Benelli Argo Endurance","Armi lunghe","Benelli",".308 Win",1200,"Come nuovo",2023,"Fermo","Privato",1,"Carabina semiauto con calcio in legno, poche cartucce sparate.",13],
+["Fabarm H3 Limited","Armi lunghe","Fabarm","Cal. 12",580,"Come nuovo",2020,"Fermo","Privato",0,"Semiauto, canna 66 cm, strozzatura variabile.",12],
+["Merkel Drilling","Armi lunghe","Merkel","12 / 7x65R",2000,"Ottimo",1998,"Vercelli","Privato",0,"Combinato con ottica Zeiss 6x42.",12],
+["Hornady Dies Set","Ricarica","Hornady",".454 Casull",168,"Nuovo",2025,"Modena","Armeria",1,"Set matrici full length in nitruro.",11],
+["Lee Breech Lock 3-Die","Ricarica","Lee",".45 Long Colt",73,"Nuovo",2025,"Modena","Armeria",1,"Set 3 matrici carburo di tungsteno.",11],
+["Dillon Primer Filler","Ricarica","Dillon","—",280,"Ottimo",2018,"Napoli","Privato",0,"Alimentatore automatico inneschi.",10],
+["Weaver Grand Slam 6-20x40","Ottica","Weaver","—",450,"Ottimo",2015,"Reggio Emilia","Privato",0,"Luminoso, nessun segno degli anelli.",10],
+["Zeiss Conquest HDX 10x42","Ottica","Zeiss","—",1290,"Nuovo",2026,"Modena","Armeria",1,"Binocolo premium, garanzia ufficiale.",9],
+["Walther CP99 Compact","Aria compressa / Softair","Walther","CO2 4,5 mm",95,"Buono",2016,"Torino","Privato",0,"Pistola a CO2, uso sportivo.",9],
+["TOPS Baja 4.5","Armi bianche","TOPS","—",130,"Nuovo",2024,"Viterbo","Privato",0,"Coltello mai usato, filo originale.",8],
+["Bear Archery Cruzer G3","Arcieria","Bear","—",340,"Ottimo",2022,"Bologna","Privato",1,"Arco compound regolabile.",8],
+["Cassaforte armi 8 posti","Accessori","Armadi Italia","—",420,"Nuovo",2026,"Brescia","Armeria",1,"Armadio blindato con serratura a combinazione.",7],
+["Richiamo acustico anatre","Caccia","Fox","—",45,"Nuovo",2026,"Milano","Armeria",0,"Richiamo elettronico con telecomando.",6],
+["Ballistol Spray 400 ml","Accessori","Ballistol","—",9,"Nuovo",2026,"Verona","Armeria",1,"Olio multiuso per pulizia e manutenzione.",5],
+["Mantis X10","Accessori","Mantis","—",230,"Come nuovo",2024,"Prato","Privato",0,"Sensore per analisi dell'allenamento, via app.",5],
+["Colt Python 4\"","Armi corte","Colt",".357 Magnum",1100,"Come nuovo",2021,"Prato","Privato",0,"Revolver 6 colpi, tenuto in collezione.",4]
+].map((a,i)=>({id:i,name:a[0],cat:a[1],brand:a[2],cal:a[3],price:a[4],cond:a[5],year:a[6],prov:a[7],seller:a[8],ver:a[9],desc:a[10],age:a[11]}));
+const $=id=>document.getElementById(id);let cat="Tutte",favs=new Set(),onlyFav=false;
+const fmt=n=>n?n.toLocaleString("it-IT",{style:"currency",currency:"EUR",maximumFractionDigits:0}):"Da concordare";
+const uniq=k=>[...new Set(D.map(d=>d[k]))].filter(x=>x!=="—").sort();
+function init(){
+ $("cats").innerHTML=CATS.map(c=>`<button class="chip ${c===cat?"on":""}" onclick="setCat('${c}')">${c}</button>`).join("");
+ if($("prov").options.length<2){uniq("prov").forEach(p=>$("prov").add(new Option(p,p)));uniq("cal").forEach(p=>$("cal").add(new Option(p,p)));uniq("brand").forEach(p=>$("brand").add(new Option(p,p)));
+ ["q","prov","pmin","pmax","cal","brand","cond","sel","onlyV","onlyP","sort"].forEach(i=>$(i).addEventListener("input",render));}
+ $("sN").textContent=D.length;$("sV").textContent=D.filter(d=>d.ver).length;render();}
+function setCat(c){cat=c;init()}
+function resetF(){["q","prov","pmin","pmax","cal","brand","cond","sel"].forEach(i=>$(i).value="");$("onlyV").checked=$("onlyP").checked=false;cat="Tutte";onlyFav=false;init()}
+function render(){
+ const q=$("q").value.toLowerCase().trim(),pmin=+$("pmin").value||0,pmax=+$("pmax").value||1e9;
+ let r=D.filter(d=>(cat==="Tutte"||d.cat===cat)&&(!onlyFav||favs.has(d.id))&&(!$("prov").value||d.prov===$("prov").value)&&(!$("cal").value||d.cal===$("cal").value)&&(!$("brand").value||d.brand===$("brand").value)&&(!$("cond").value||d.cond===$("cond").value)&&(!$("sel").value||d.seller===$("sel").value)&&(!$("onlyV").checked||d.ver)&&(!$("onlyP").checked||d.price)&&(d.price===0||(d.price>=pmin&&d.price<=pmax))&&(!q||(d.name+d.brand+d.cal+d.desc+d.prov).toLowerCase().includes(q)));
+ const s=$("sort").value;r.sort((a,b)=>s==="pa"?a.price-b.price:s==="pd"?b.price-a.price:s==="az"?a.name.localeCompare(b.name):a.age-b.age||b.id-a.id);
+ $("count").textContent=r.length+(r.length===1?" annuncio trovato":" annunci trovati");
+ $("grid").innerHTML=r.length?r.map(d=>`<article class="card" onclick="openM(${d.id})"><div class="ph" style="background:linear-gradient(135deg,${COL[d.cat]},#111)"><span class="tag">${d.cat}</span><button class="heart ${favs.has(d.id)?"on":""}" onclick="event.stopPropagation();fav(${d.id})" aria-label="Preferito">♥</button>${d.brand}</div><div class="cb"><h4>${d.name}</h4><div class="price">${fmt(d.price)}</div><div class="meta"><span>${d.cond}</span><span>${d.cal}</span><span>${d.year}</span></div><div class="loc"><span>${d.prov} · ${d.seller}</span>${d.ver?'<span class="ver">✓ Verificato</span>':""}</div></div></article>`).join(""):'<div class="empty" style="grid-column:1/-1"><h3>Nessun risultato</h3>Prova a modificare o azzerare i filtri.</div>';
+}
+function openM(id){const d=D[id];$("box").innerHTML=`<div class="ph" style="background:linear-gradient(135deg,${COL[d.cat]},#111)">${d.brand}</div><div class="det"><button class="x" onclick="closeM()" aria-label="Chiudi">✕</button><h2>${d.name}</h2><div class="price">${fmt(d.price)}</div><p>${d.desc}</p><table><tr><td>Categoria</td><td>${d.cat}</td></tr><tr><td>Marca</td><td>${d.brand}</td></tr><tr><td>Calibro</td><td>${d.cal}</td></tr><tr><td>Condizione</td><td>${d.cond}</td></tr><tr><td>Anno</td><td>${d.year}</td></tr><tr><td>Provincia</td><td>${d.prov}</td></tr><tr><td>Venditore</td><td>${d.seller}${d.ver?" · ✓ verificato":""}</td></tr></table><div class="note">Per armi da fuoco: la cessione è consentita solo a chi possiede i titoli previsti (es. porto d'armi, nulla osta) e va denunciata all'autorità competente. Si consiglia di concludere tramite armeria.</div><button class="btn" style="width:100%" onclick="alert('Demo: qui si aprirebbe il contatto col venditore.')">Contatta il venditore</button></div>`;$("modal").classList.add("on")}
+function closeM(){$("modal").classList.remove("on")}
+function fav(id){favs.has(id)?favs.delete(id):favs.add(id);$("fc").textContent=favs.size;render()}
+function toggleFav(){onlyFav=!onlyFav;$("favBtn").style.borderColor=onlyFav?"var(--ac)":"";render()}
+function toggleF(){$("aside").classList.toggle("on")}
+function toggleTheme(){const r=document.documentElement,dark=getComputedStyle(r).getPropertyValue("--bg").trim()==="#0e1116";r.dataset.theme=dark?"light":"dark"}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeM()});
+init();
+</script>
+</body>
+</html>
